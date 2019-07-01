@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>vue多条件筛选排序案例</title>
+    <title>vue多条件筛选功能案例</title>
     <link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="css/style.css">
     <!--[if lt IE 9]>
@@ -47,7 +47,8 @@
                 sorts:[], //排序列表
                 curIndex:"0",   //切换栏当前索引值
                 typeId:"1001",  //选择类型id
-                followerId:"1001"  //粉丝量id
+                followerId:"1001",  //粉丝量id
+                getSelectId:'ccc'
             }
         },
         created(){
@@ -68,12 +69,13 @@
 
             //切换栏
             changeTab(index){
-                let sorts = this.sorts;
+                let vm = this,
+                    sorts = vm.sorts;
                 this.curIndex = index;
                 sorts.forEach(function(v,i){
-                    v.isActive = false;
+                    vm.$set(v, 'isActive', false);
                     if(index!==i){
-                        v.isShow = false;
+                        vm.$set(v, 'isShow', false);
                     }
                 })
                 sorts[index].isActive = true;
@@ -82,8 +84,9 @@
 
             //选择选项
             chooseItem(index){
-                let sorts = this.sorts,
-                    curIndex = this.curIndex;
+                let vm = this,
+                    sorts = vm.sorts,
+                    curIndex = vm.curIndex;
                 sorts[curIndex].cidArr.forEach(function (c,k) {
                     c.isChecked = false;
                 })
@@ -91,13 +94,12 @@
                 var chooseId = sorts[curIndex].cidArr[index].key,
                     chooseTitle = sorts[curIndex].cidArr[index].title;
                 if(curIndex==0){
-                    this.typeId = chooseId;
+                    vm.typeId = chooseId;
                 }else if(curIndex==1){
-                    this.followerId = chooseId;
+                    vm.followerId = chooseId;
                 }
-                this.$refs.chooseTitle[curIndex].innerText = chooseTitle;
+                vm.$refs.chooseTitle[curIndex].innerText = chooseTitle;
                 sorts[curIndex].isShow = false;
-
             }
         }
     })
