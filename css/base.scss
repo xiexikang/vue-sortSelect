@@ -1,0 +1,145 @@
+@charset "utf-8";
+
+/* 初始化 */
+body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p, dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { margin: 0; padding: 0; border: none; -webkit-tap-highlight-color: transparent; outline: none; }
+
+html { height: 100%; overflow-x: hidden; background: #3c3c3c; /* 禁用iPhone中Safari的字号自动调整 */ -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+
+body { position: relative; margin: 0 auto !important; width: 100%; min-width: 320px; max-width: 640px;
+  min-height: 100%; font: 0.24rem/1 "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333; background: #f6f6f6; overflow: hidden; }
+
+em, i { font-style: normal; }
+
+/* 设置HTML5元素为块 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+
+a { text-decoration: none; color: #333; font-size: 0.24rem; font-family: "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+h1, h2, h3, h4, h5, h6 { font-weight: normal; line-height: 1.1; }
+
+strong { font-weight: normal; }
+
+ul, ol, li { list-style: none; }
+
+textarea{ outline:none;resize:none; -webkit-appearance: none; -moz-appearance: none;}
+input,button,textarea{ font-size: 0.24rem; font-family: "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, sans-serif; background-color: transparent; }
+/* 去除iPhone中默认的input样式 */
+input { resize: none; }
+input[type="text"], input[type="submit"], input[type="reset"], input[type="button"] { -webkit-appearance: none; }
+
+/* 图片自适应 */
+img { border: none; vertical-align: middle; height: auto; max-width: 100%; width: auto \9; /* ie8 */ -ms-interpolation-mode: bicubic; /*为了照顾ie图片缩放失真*/ }
+
+/* clearfix */
+.clearfix, .header .inner { *zoom: 1; }
+.clearfix:before, .header .inner:before, .clearfix:after, .header .inner:after { content: ""; display: table; }
+.clearfix:after, .header .inner:after { clear: both; }
+
+
+// base.scss
+$defaultSize:.3rem !default;
+$base-color: #333 !default;
+body,a,input,textarea,button,select{ font-size:$defaultSize; color: $base-color; }
+input,textarea{ border-radius: 0; }
+$imgUrl:"../images";
+$main-color:#e44135 !default;
+$new-blue:#589ef7 !default;
+$white:#fff !default;
+$gray:#f7f7f7 !default;
+$font-weight:700;
+$txt-lineHight:1.2 !default;
+$fl:left !default;
+$fr:right !default;
+$max-width:640px;
+$min-width:320px;
+$baseFontSize: 100px !default;
+@function pxToRem($px) {
+  @return $px / $baseFontSize * 1rem;
+}
+@function remToPx($rem) {
+  @return $baseFontSize * $rem / 1rem;
+}
+%borRadio50{ border-radius: 50%;}
+%borRadio6{ border-radius:.06rem;}
+%ovrd{ overflow: hidden;}
+%m0a{ margin: 0 auto;}
+%pdLR40{ padding: 0 .4rem;}
+%widHig{ width: 100%; height: 100%;}
+%ellipsis{overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+%pseudo{ content: ""; display: inline-block; vertical-align: middle;}
+%maxWidth{ max-width:$max-width;}
+%clearfix {
+  &:before, &:after { content: ''; display: table; }
+  &:after { clear: both; *zoom: 1; }
+}
+%fixedTop{ position: fixed; left: auto; top: 0; right: auto; bottom: auto; z-index: 88; @extend %maxWidth;}
+%fixedBottom{ position: fixed; left: auto; bottom: 0; right: auto; top: auto; z-index: 88; width: 100%; @extend %maxWidth;}
+@mixin pdLR(){ padding:0 .4rem;}
+@mixin bgPara(){ background-repeat: no-repeat; background-size: cover; }
+@mixin displayFlex(){ display: flex; display: -webkit-box; display: -ms-flexbox; }
+@mixin flex(){ flex:1; -webkit-box-flex:1;  -ms-flex:1; }
+@mixin lineHig($hig){ height: $hig; line-height: $hig;}
+@mixin box-sizing(){ box-sizing: border-box; }
+@mixin ellipsis($v...) {
+  $l: length($v);
+  overflow: hidden; text-overflow: ellipsis;
+  @if ($l == 0) {
+    white-space: nowrap; line-height: $txt-lineHight;
+  } @else if ($l == 1) {
+    display: -webkit-box; -webkit-line-clamp: $v; -webkit-box-orient: vertical;
+  }
+}
+@mixin transition($transition...){
+  transition:$transition;  -webkit-transition:$transition;  -moz-transition:$transition;
+  -ms-transition:$transition; -o-transition:$transition;
+}
+@mixin transform($transform...){
+  transform:$transform;  -webkit-transform:$transform;  -moz-transform:$transform;
+  -ms-transform:$transform;  -o-transform:$transform;
+}
+
+%translateXY{ position:absolute; left: 50%; top: 50%; @include transform(translate(-50%,-50%)); }
+%translateX{ position:absolute; left: 50%; top: auto; @include transform(translate(-50%,0)); }
+%translateY{ position:absolute; left: auto; top: 50%; @include transform(translate(0,-50%)); }
+@mixin animation($animation...){
+  animation:$animation;  -webkit-animation:$animation;  -moz-animation:$animation;
+  -ms-animation:$animation;  -o-animation:$animation;
+}
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+@mixin box-shadow($shadow...) {
+  -webkit-box-shadow:$shadow;  -moz-box-shadow:$shadow; box-shadow:$shadow;
+}
+
+@mixin borderB-line($border-B:1px solid #f2f2f2){
+  border-bottom:$border-B;
+}
+@mixin max-screen($res){
+  @media only screen and ( max-width: $res )
+  {
+    @content;
+  }
+}
+@mixin min-screen($res){
+  @media only screen and ( min-width: $res )
+  {
+    @content;
+  }
+}
+
+[v-cloak] {
+  display: none !important;
+}

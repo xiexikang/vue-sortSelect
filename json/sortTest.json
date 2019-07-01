@@ -1,0 +1,59 @@
+{
+  "data":[
+    {
+      "index":"0",
+      "title":"选择平台",
+      "isActive": true,
+      "id":"1001",
+      "cidArr":[{
+        "key":"1001",
+        "title":"综合排序",
+        "isChecked":true
+      }, {
+        "key":"1002",
+        "title":"抖音",
+        "isChecked":false
+      },{
+        "key":"1003",
+        "title":"快手",
+        "isChecked":false
+      }, {
+        "key":"1004",
+        "title":"小红书",
+        "isChecked":false
+      }, {
+        "key":"1005",
+        "title":"美拍",
+        "isChecked":false
+      }],
+      "isShow": false
+    },
+    {
+      "index":"1",
+      "title":"粉丝量",
+      "isActive": false,
+      "id":"1001",
+      "cidArr":[{
+        "key":"1001",
+        "title":"综合排序",
+        "isChecked":true
+      }, {
+        "key":"1002",
+        "title":"10w以内",
+        "isChecked":false
+      },{
+        "key":"1003",
+        "title":"10w-50w",
+        "isChecked":false
+      },{
+        "key":"1004",
+        "title":"50w-200w",
+        "isChecked":false
+      },{
+        "key":"1005",
+        "title":"200w+",
+        "isChecked":false
+      }],
+      "isShow": false
+    }]
+}

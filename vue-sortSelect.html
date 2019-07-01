@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>卖货</title>
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.static.runoob.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<!--排序筛选-->
+<div class="the-sorts" id="vue-sorts">
+    <div class="pick-con">
+        <div class="tablist">
+            <ol class="sort-ol">
+                <li class="tk" v-for="(v,index) in sorts" :class="{cur:v.isActive}" @click="changeTab(index)">
+                    <span class="tt" v-cloak ref="chooseTitle">{{v.title}}</span>
+                    <i class="i"></i>
+                </li>
+            </ol>
+        </div>
+        <div class="droplist" >
+            <ul class="sort-ul" v-for="(v,index) in sorts"  v-show="v.isShow">
+                <li class="tg" v-for="(c,index) in v.cidArr" :class="{cur:c.isChecked}" @click="chooseItem(index)">
+                    <span class="ti" v-cloak>{{c.title}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="plugins/base.js"></script>
+<script src="plugins/vue.js"></script>
+<script src="plugins/axios.js"></script>
+<script type="text/javascript">
+    //淘客
+    const vueSorts = new Vue({
+        el: '#vue-sorts',
+        data(){
+            return{
+                sorts:[], //排序列表
+                curIndex:"0",   //切换栏当前索引值
+                typeId:"1001",  //选择类型id
+                followerId:"1001"  //粉丝量id
+            }
+        },
+        created(){
+            this.getSortJson();
+        },
+        methods:{
+            //获取排序的数据
+            getSortJson(){
+                let url = 'json/sortTest.json';
+                axios.get(url)
+                    .then(response =>{
+                    this.sorts = response.data.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            },
+
+            //切换栏
+            changeTab(index){
+                let sorts = this.sorts;
+                this.curIndex = index;
+                sorts.forEach(function(v,i){
+                    v.isActive = false;
+                    if(index!==i){
+                        v.isShow = false;
+                    }
+                })
+                sorts[index].isActive = true;
+                sorts[index].isShow = !sorts[index].isShow;
+            },
+
+            //选择选项
+            chooseItem(index){
+                let sorts = this.sorts,
+                    curIndex = this.curIndex;
+                sorts[curIndex].cidArr.forEach(function (c,k) {
+                    c.isChecked = false;
+                })
+                sorts[curIndex].cidArr[index].isChecked = true;
+                var chooseId = sorts[curIndex].cidArr[index].key,
+                    chooseTitle = sorts[curIndex].cidArr[index].title;
+                if(curIndex==0){
+                    this.typeId = chooseId;
+                }else if(curIndex==1){
+                    this.followerId = chooseId;
+                }
+                this.$refs.chooseTitle[curIndex].innerText = chooseTitle;
+                sorts[curIndex].isShow = false;
+
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
